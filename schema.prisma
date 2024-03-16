@@ -1,0 +1,25 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./assets/mySQLiteDB.db"
+}
+
+model Categories {
+  id           Int            @id @default(autoincrement())
+  name         String
+  type         String
+  Transactions Transactions[]
+}
+
+model Transactions {
+  id          Int         @id @default(autoincrement())
+  category_id Int?
+  amount      Float
+  date        Int
+  description String?
+  type        String
+  Categories  Categories? @relation(fields: [category_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}

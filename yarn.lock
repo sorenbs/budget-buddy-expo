@@ -2346,10 +2346,39 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@op-engineering/react-native-prisma@npm:0.1.15":
+  version: 0.1.15
+  resolution: "@op-engineering/react-native-prisma@npm:0.1.15"
+  dependencies:
+    pod-install: ^0.2.0
+  peerDependencies:
+    "@prisma/client": "*"
+    expo: ">=49.0.0"
+    react: "*"
+    react-native: "*"
+  peerDependenciesMeta:
+    expo:
+      optional: true
+  checksum: cb7b794743194add03bd477e1ac4b32649bdd980f4edf58468bdcd4d3b7cba7b46ea11b2b4c3c3f9807ccfbf92708491100dd3c0ab2da05a9a25d6474fea7a22
+  languageName: node
+  linkType: hard
+
 "@pkgjs/parseargs@npm:^0.11.0":
   version: 0.11.0
   resolution: "@pkgjs/parseargs@npm:0.11.0"
   checksum: 6ad6a00fc4f2f2cfc6bff76fb1d88b8ee20bc0601e18ebb01b6d4be583733a860239a521a7fbca73b612e66705078809483549d2b18f370eb346c5155c8e4a0f
+  languageName: node
+  linkType: hard
+
+"@prisma/client@npm:5.9.0-integration-react-native.5":
+  version: 5.9.0-integration-react-native.5
+  resolution: "@prisma/client@npm:5.9.0-integration-react-native.5"
+  peerDependencies:
+    prisma: "*"
+  peerDependenciesMeta:
+    prisma:
+      optional: true
+  checksum: 749e4a01086484c50f31ffaa4623505499e86d0e0ee224e4c43babec0633795141393157d896d7f9a1dfebd1b780cbfadeb24f88ce8ce7f8c43250a867a44f68
   languageName: node
   linkType: hard
 
@@ -3511,6 +3540,8 @@ __metadata:
   resolution: "budgetbuddy@workspace:."
   dependencies:
     "@babel/core": ^7.20.0
+    "@op-engineering/react-native-prisma": 0.1.15
+    "@prisma/client": 5.9.0-integration-react-native.5
     "@react-native-segmented-control/segmented-control": ^2.5.0
     "@react-navigation/native": ^6.1.10
     "@react-navigation/native-stack": ^6.9.18
@@ -7238,6 +7269,15 @@ __metadata:
   version: 3.4.0
   resolution: "pngjs@npm:3.4.0"
   checksum: 8bd40bd698abd16b72c97b85cb858c80894fbedc76277ce72a784aa441e14795d45d9856e97333ca469b34b67528860ffc8a7317ca6beea349b645366df00bcd
+  languageName: node
+  linkType: hard
+
+"pod-install@npm:^0.2.0":
+  version: 0.2.0
+  resolution: "pod-install@npm:0.2.0"
+  bin:
+    pod-install: build/index.js
+  checksum: ecfe94d1285b42dd56fb03b9d1850d805f5626b8030acd32f2cb9ea6902e678deaefbb8475d2e307d0a6311159c6b5deea173adcc045c5ff6d58b377b0dcf1b8
   languageName: node
   linkType: hard
 

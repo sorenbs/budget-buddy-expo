@@ -9,6 +9,8 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@op-engineering/react-native-prisma": "0.1.15",
+    "@prisma/client": "5.9.0-integration-react-native.5",
     "@react-native-segmented-control/segmented-control": "^2.5.0",
     "@react-navigation/native": "^6.1.10",
     "@react-navigation/native-stack": "^6.9.18",

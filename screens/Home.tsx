@@ -6,6 +6,9 @@ import TransactionList from "../components/TransactionsList";
 import Card from "../components/ui/Card";
 import AddTransaction from "../components/AddTransaction";
 
+import '@op-engineering/react-native-prisma';
+import { PrismaClient } from '@prisma/client/rn';
+
 export default function Home() {
   const [categories, setCategories] = React.useState<Category[]>([]);
   const [transactions, setTransactions] = React.useState<Transaction[]>([]);
