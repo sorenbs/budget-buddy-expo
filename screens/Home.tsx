@@ -9,6 +9,14 @@ import AddTransaction from "../components/AddTransaction";
 import '@op-engineering/react-native-prisma';
 import { PrismaClient } from '@prisma/client/rn';
 
+import 'react-native-url-polyfill/auto';
+import { atob, btoa } from 'react-native-quick-base64';
+
+global.atob = atob;
+global.btoa = btoa;
+
+const prisma = new PrismaClient()
+
 export default function Home() {
   const [categories, setCategories] = React.useState<Category[]>([]);
   const [transactions, setTransactions] = React.useState<Transaction[]>([]);
@@ -18,24 +26,36 @@ export default function Home() {
       totalIncome: 0,
     });
 
-  const db = useSQLiteContext();
+  // const db = useSQLiteContext();
 
   React.useEffect(() => {
-    db.withTransactionAsync(async () => {
-      await getData();
-    });
-  }, [db]);
+    // db.withTransactionAsync(async () => {
+      getData();
+    // });
+  }, []);
 
   async function getData() {
-    const result = await db.getAllAsync<Transaction>(
-      `SELECT * FROM Transactions ORDER BY date DESC;`
-    );
+    console.log("getting data")
+    const result: Transaction[] = (await prisma.transactions.findMany()).map(x => ({
+      id: x.id,
+      category_id: x.category_id || 0,
+      amount: x.amount,
+      date: x.date,
+      description: x.description || "",
+      type: x.type
+    }))
+    
+    
+    
+    // const result = await db.getAllAsync<Transaction>(
+    //   `SELECT * FROM Transactions ORDER BY date DESC;`
+    // );
     setTransactions(result);
 
-    const categoriesResult = await db.getAllAsync<Category>(
-      `SELECT * FROM Categories;`
-    );
-    setCategories(categoriesResult);
+    // const categoriesResult = await db.getAllAsync<Category>(
+    //   `SELECT * FROM Categories;`
+    // );
+    setCategories([]);
 
     const now = new Date();
     // Set to the first day of the current month
@@ -48,47 +68,48 @@ export default function Home() {
     const startOfMonthTimestamp = Math.floor(startOfMonth.getTime() / 1000);
     const endOfMonthTimestamp = Math.floor(endOfMonth.getTime() / 1000);
 
-    const transactionsByMonth = await db.getAllAsync<TransactionsByMonth>(
-      `
-      SELECT
-        COALESCE(SUM(CASE WHEN type = 'Expense' THEN amount ELSE 0 END), 0) AS totalExpenses,
-        COALESCE(SUM(CASE WHEN type = 'Income' THEN amount ELSE 0 END), 0) AS totalIncome
-      FROM Transactions
-      WHERE date >= ? AND date <= ?;
-    `,
-      [startOfMonthTimestamp, endOfMonthTimestamp]
-    );
+    const transactionsByMonth: React.SetStateAction<TransactionsByMonth>[] = []
+    //  await db.getAllAsync<TransactionsByMonth>(
+    //   `
+    //   SELECT
+    //     COALESCE(SUM(CASE WHEN type = 'Expense' THEN amount ELSE 0 END), 0) AS totalExpenses,
+    //     COALESCE(SUM(CASE WHEN type = 'Income' THEN amount ELSE 0 END), 0) AS totalIncome
+    //   FROM Transactions
+    //   WHERE date >= ? AND date <= ?;
+    // `,
+    //   // [startOfMonthTimestamp, endOfMonthTimestamp]
+    // );
     setTransactionsByMonth(transactionsByMonth[0]);
   }
 
   async function deleteTransaction(id: number) {
-    db.withTransactionAsync(async () => {
-      await db.runAsync(`DELETE FROM Transactions WHERE id = ?;`, [id]);
-      await getData();
-    });
+    // db.withTransactionAsync(async () => {
+    //   await db.runAsync(`DELETE FROM Transactions WHERE id = ?;`, [id]);
+    //   await getData();
+    // });
   }
 
   async function insertTransaction(transaction: Transaction) {
-    db.withTransactionAsync(async () => {
-      await db.runAsync(
-        `
-        INSERT INTO Transactions (category_id, amount, date, description, type) VALUES (?, ?, ?, ?, ?);
-      `,
-        [
-          transaction.category_id,
-          transaction.amount,
-          transaction.date,
-          transaction.description,
-          transaction.type,
-        ]
-      );
-      await getData();
-    });
+    // db.withTransactionAsync(async () => {
+    //   await db.runAsync(
+    //     `
+    //     INSERT INTO Transactions (category_id, amount, date, description, type) VALUES (?, ?, ?, ?, ?);
+    //   `,
+    //     [
+    //       transaction.category_id,
+    //       transaction.amount,
+    //       transaction.date,
+    //       transaction.description,
+    //       transaction.type,
+    //     ]
+    //   );
+    //   await getData();
+    // });
   }
 
   return (
     <ScrollView contentContainerStyle={{ padding: 15, paddingVertical: 170 }}>
-      <AddTransaction insertTransaction={insertTransaction} />
+      {/* <AddTransaction insertTransaction={insertTransaction} /> */}
       <TransactionSummary
         totalExpenses={transactionsByMonth.totalExpenses}
         totalIncome={transactionsByMonth.totalIncome}

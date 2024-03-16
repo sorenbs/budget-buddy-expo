@@ -10,9 +10,9 @@ import Home from "./screens/Home";
 const Stack = createNativeStackNavigator();
 
 const loadDatabase = async () => {
-  const dbName = "mySQLiteDB.db";
-  const dbAsset = require("./assets/mySQLiteDB.db");
-  const dbUri = Asset.fromModule(dbAsset).uri;
+  const dbName = "mySQLiteDB2.db";
+  // const dbAsset = require("./assets/mySQLiteDB2.db");
+  // const dbUri = Asset.fromModule(dbAsset).uri;
   const dbFilePath = `${FileSystem.documentDirectory}SQLite/${dbName}`;
 
   const fileInfo = await FileSystem.getInfoAsync(dbFilePath);
@@ -21,7 +21,7 @@ const loadDatabase = async () => {
       `${FileSystem.documentDirectory}SQLite`,
       { intermediates: true }
     );
-    await FileSystem.downloadAsync(dbUri, dbFilePath);
+    // await FileSystem.downloadAsync(dbUri, dbFilePath);
   }
 };
 
@@ -51,7 +51,7 @@ export default function App() {
           </View>
         }
       >
-        <SQLiteProvider databaseName="mySQLiteDB.db" useSuspense>
+        {/* <SQLiteProvider databaseName="mySQLiteDB.db" useSuspense> */}
           <Stack.Navigator>
             <Stack.Screen
               name="Home"
@@ -62,7 +62,7 @@ export default function App() {
               }}
             />
           </Stack.Navigator>
-        </SQLiteProvider>
+        {/* </SQLiteProvider> */}
       </React.Suspense>
     </NavigationContainer>
   );
