@@ -4,22 +4,30 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = "file:./assets/mySQLiteDB.db"
+  url      = "file:./app.db"
 }
 
 model Categories {
   id           Int            @id @default(autoincrement())
   name         String
   type         String
-  Transactions Transactions[]
+  transactions Transactions[]
 }
 
 model Transactions {
   id          Int         @id @default(autoincrement())
-  category_id Int?
+  category_id Int
   amount      Float
   date        Int
-  description String?
+  description String      @default("")
   type        String
-  Categories  Categories? @relation(fields: [category_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  category    Categories? @relation(fields: [category_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model AddTransactionView {
+  isAddingTransaction Boolean @default(false)
+  amount              Float   @default(0)
+  description         String  @default("")
+  type                String  @unique @default("Expense")
+  categoryId          Int?
 }

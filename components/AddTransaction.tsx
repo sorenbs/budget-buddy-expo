@@ -3,68 +3,38 @@ import { Button, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import Card from "./ui/Card";
 import SegmentedControl from "@react-native-segmented-control/segmented-control";
-import { useSQLiteContext } from "expo-sqlite/next";
-import { Category, Transaction } from "../types";
+import { prisma } from "../db"
 
-export default function AddTransaction({
-  insertTransaction,
-}: {
-  insertTransaction(transaction: Transaction): Promise<void>;
-}) {
-  const [isAddingTransaction, setIsAddingTransaction] =
-    React.useState<boolean>(false);
-  const [currentTab, setCurrentTab] = React.useState<number>(0);
-  const [categories, setCategories] = React.useState<Category[]>([]);
-  const [typeSelected, setTypeSelected] = React.useState<string>("");
-  const [amount, setAmount] = React.useState<string>("");
-  const [description, setDescription] = React.useState<string>("");
-  const [category, setCategory] = React.useState<string>("Expense");
-  const [categoryId, setCategoryId] = React.useState<number>(1);
-  const db = useSQLiteContext();
+export default function AddTransaction() {
 
-  React.useEffect(() => {
-    getExpenseType(currentTab);
-  }, [currentTab]);
-
-  async function getExpenseType(currentTab: number) {
-    setCategory(currentTab === 0 ? "Expense" : "Income");
-    const type = currentTab === 0 ? "Expense" : "Income";
-
-    const result = await db.getAllAsync<Category>(
-      `SELECT * FROM Categories WHERE type = ?;`,
-      [type]
-    );
-    setCategories(result);
+  const defaultViewData = {
+    isAddingTransaction: false,
+    amount: 0,
+    description: "",
+    type: "Expense",
+    categoryId: null,
   }
 
-  async function handleSave() {
-    console.log({
-      amount: Number(amount),
-      description,
-      category_id: categoryId,
-      date: new Date().getTime() / 1000,
-      type: category as "Expense" | "Income",
-    });
+  const viewData = prisma.addTransactionView.useFindFirst() || defaultViewData
+  const expenseCategories = prisma.categories.useFindMany({ where: { type: "Expense" } })
+  const incomeCategories = prisma.categories.useFindMany({ where: { type: "Income" } })
 
-    // @ts-ignore
-    await insertTransaction({
-      amount: Number(amount),
-      description,
-      category_id: categoryId,
-      date: new Date().getTime() / 1000,
-      type: category as "Expense" | "Income",
-    });
-    setAmount("");
-    setDescription("");
-    setCategory("Expense");
-    setCategoryId(1);
-    setCurrentTab(0);
-    setIsAddingTransaction(false);
+  async function handleSave() {
+    await prisma.transactions.create({
+      data: {
+        amount: viewData.amount,
+        description: viewData.description,
+        category_id: viewData.categoryId || 0,
+        date: new Date().getTime() / 1000,
+        type: viewData.type,
+      }
+    })
+    await prisma.addTransactionView.updateMany({ data: defaultViewData })
   }
 
   return (
     <View style={{ marginBottom: 15 }}>
-      {isAddingTransaction ? (
+      {viewData.isAddingTransaction ? (
         <View>
           <Card>
             <TextInput
@@ -73,33 +43,31 @@ export default function AddTransaction({
               keyboardType="numeric"
               onChangeText={(text) => {
                 // Remove any non-numeric characters before setting the state
-                const numericValue = text.replace(/[^0-9.]/g, "");
-                setAmount(numericValue);
+                const numericValue = Number(text.replace(/[^0-9.]/g, ""));
+                prisma.addTransactionView.updateMany({ data: { amount: numericValue } })
               }}
             />
             <TextInput
               placeholder="Description"
               style={{ marginBottom: 15 }}
-              onChangeText={setDescription}
+              onChangeText={(text) =>
+                prisma.addTransactionView.updateMany({ data: { description: text } })}
             />
             <Text style={{ marginBottom: 6 }}>Select a entry type</Text>
             <SegmentedControl
               values={["Expense", "Income"]}
               style={{ marginBottom: 15 }}
               selectedIndex={0}
-              onChange={(event) => {
-                setCurrentTab(event.nativeEvent.selectedSegmentIndex);
+              onChange={async (event) => {
+                await prisma.addTransactionView.updateMany({ data: { type: event.nativeEvent.value } })
               }}
             />
-            {categories.map((cat) => (
+            {(viewData.type == "Expense" ? expenseCategories : incomeCategories).map((cat) => (
               <CategoryButton
-                key={cat.name}
-                // @ts-ignore
+                key={cat.id}
                 id={cat.id}
                 title={cat.name}
-                isSelected={typeSelected === cat.name}
-                setTypeSelected={setTypeSelected}
-                setCategoryId={setCategoryId}
+                isSelected={viewData.categoryId === cat.id}
               />
             ))}
           </Card>
@@ -109,13 +77,14 @@ export default function AddTransaction({
             <Button
               title="Cancel"
               color="red"
-              onPress={() => setIsAddingTransaction(false)}
+              onPress={() =>
+                prisma.addTransactionView.updateMany({ data: { isAddingTransaction: false } })}
             />
             <Button title="Save" onPress={handleSave} />
           </View>
         </View>
       ) : (
-        <AddButton setIsAddingTransaction={setIsAddingTransaction} />
+        <AddButton />
       )}
     </View>
   );
@@ -125,20 +94,15 @@ function CategoryButton({
   id,
   title,
   isSelected,
-  setTypeSelected,
-  setCategoryId,
 }: {
   id: number;
   title: string;
   isSelected: boolean;
-  setTypeSelected: React.Dispatch<React.SetStateAction<string>>;
-  setCategoryId: React.Dispatch<React.SetStateAction<number>>;
 }) {
   return (
     <TouchableOpacity
       onPress={() => {
-        setTypeSelected(title);
-        setCategoryId(id);
+        prisma.addTransactionView.updateMany({ data: { categoryId: id } })
       }}
       activeOpacity={0.6}
       style={{
@@ -164,14 +128,11 @@ function CategoryButton({
   );
 }
 
-function AddButton({
-  setIsAddingTransaction,
-}: {
-  setIsAddingTransaction: React.Dispatch<React.SetStateAction<boolean>>;
-}) {
+function AddButton() {
   return (
     <TouchableOpacity
-      onPress={() => setIsAddingTransaction(true)}
+      onPress={() =>
+        prisma.addTransactionView.updateMany({ data: { isAddingTransaction: true } })}
       activeOpacity={0.6}
       style={{
         height: 40,

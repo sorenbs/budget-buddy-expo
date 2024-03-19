@@ -1,24 +1,18 @@
 import { AntDesign } from "@expo/vector-icons";
 import { StyleSheet, Text, View } from "react-native";
-import { Category, Transaction } from "../types";
 import { AutoSizeText, ResizeTextMode } from "react-native-auto-size-text";
 import { categoryColors, categoryEmojies } from "../constants";
 import Card from "./ui/Card";
-
-interface TransactionListItemProps {
-  transaction: Transaction;
-  categoryInfo: Category | undefined;
-}
+import { Prisma } from '@prisma/client'
 
 export default function TransactionListItem({
-  transaction,
-  categoryInfo,
-}: TransactionListItemProps) {
+  transaction
+}: {transaction: Prisma.TransactionsGetPayload<{include: {category: true}}>}) {
   const iconName =
     transaction.type === "Expense" ? "minuscircle" : "pluscircle";
   const color = transaction.type === "Expense" ? "red" : "green";
-  const categoryColor = categoryColors[categoryInfo?.name ?? "Default"];
-  const emoji = categoryEmojies[categoryInfo?.name ?? "Default"];
+  const categoryColor = categoryColors[transaction.category?.name ?? "Default"];
+  const emoji = categoryEmojies[transaction.category?.name ?? "Default"];
   return (
     <Card>
       <View style={styles.row}>
@@ -30,7 +24,7 @@ export default function TransactionListItem({
           />
           <CategoryItem
             categoryColor={categoryColor}
-            categoryInfo={categoryInfo}
+            categoryName={transaction.category?.name || ""}
             emoji={emoji}
           />
         </View>
@@ -66,11 +60,11 @@ function TransactionInfo({
 
 function CategoryItem({
   categoryColor,
-  categoryInfo,
+  categoryName,
   emoji,
 }: {
   categoryColor: string;
-  categoryInfo: Category | undefined;
+  categoryName: string;
   emoji: string;
 }) {
   return (
@@ -81,7 +75,7 @@ function CategoryItem({
       ]}
     >
       <Text style={styles.categoryText}>
-        {emoji} {categoryInfo?.name}
+        {emoji} {categoryName}
       </Text>
     </View>
   );

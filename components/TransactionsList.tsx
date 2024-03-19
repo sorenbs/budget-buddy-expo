@@ -1,22 +1,18 @@
 import { Text, TouchableOpacity, View } from "react-native";
-import { Category, Transaction } from "../types";
 import TransactionListItem from "./TransactionListItem";
+import { prisma } from "../db"
 
-export default function TransactionList({
-  transactions,
-  categories,
-  deleteTransaction,
-}: {
-  categories: Category[];
-  transactions: Transaction[];
-  deleteTransaction: (id: number) => Promise<void>;
-}) {
+export default function TransactionList() {
+
+  const transactions = prisma.transactions.useFindMany({ orderBy: { date: "desc" }, include: {category: true} })
+
+  async function deleteTransaction(id: number) {
+    await prisma.transactions.delete({ where: { id } });
+  }
+
   return (
     <View style={{ gap: 15 }}>
       {transactions.map((transaction) => {
-        const categoryForCurrentItem = categories.find(
-          (category) => category.id === transaction.category_id
-        );
         return (
           <TouchableOpacity
             key={transaction.id}
@@ -25,7 +21,6 @@ export default function TransactionList({
           >
             <TransactionListItem
               transaction={transaction}
-              categoryInfo={categoryForCurrentItem}
             />
           </TouchableOpacity>
         );
