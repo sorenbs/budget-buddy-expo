@@ -30,12 +30,12 @@ function TransactionSummary() {
   const totalExpenses = prisma.transactions.useAggregate({
     _sum: { amount: true },
     where: { type: "Expense", AND: { date: { lte: endOfMonthTimestamp, gte: startOfMonthTimestamp } } }
-  })?._sum.amount
+  })?._sum.amount || 0
 
   const totalIncome = prisma.transactions.useAggregate({
     _sum: { amount: true },
     where: { type: "Income", AND: { date: { lte: endOfMonthTimestamp, gte: startOfMonthTimestamp } } }
-  })?._sum.amount
+  })?._sum.amount || 0
 
   const savings = totalIncome - totalExpenses;
   const readablePeriod = new Date().toLocaleDateString("default", {
