@@ -3,11 +3,10 @@ import { ScrollView, StyleSheet, Text, TextStyle} from "react-native";
 import TransactionList from "../components/TransactionsList";
 import Card from "../components/ui/Card";
 import AddTransaction from "../components/AddTransaction";
-
-import { prisma } from "../db"
+import { usePrismaContext } from "../prismaProvider";
 
 export default function Home() {
-
+  
   return (
     <ScrollView contentContainerStyle={{ padding: 15, paddingVertical: 170 }}>
       <AddTransaction />
@@ -18,6 +17,7 @@ export default function Home() {
 }
 
 function TransactionSummary() {
+  const prisma = usePrismaContext();
 
   const now = new Date();
   const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);

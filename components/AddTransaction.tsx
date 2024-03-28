@@ -3,7 +3,7 @@ import { Button, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import Card from "./ui/Card";
 import SegmentedControl from "@react-native-segmented-control/segmented-control";
-import { prisma } from "../db"
+import { usePrismaContext } from "../prismaProvider";
 
 export default function AddTransaction() {
 
@@ -15,6 +15,7 @@ export default function AddTransaction() {
     categoryId: null,
   }
 
+  const prisma = usePrismaContext();
   const viewData = prisma.addTransactionView.useFindFirst() || defaultViewData
   const expenseCategories = prisma.categories.useFindMany({ where: { type: "Expense" } })
   const incomeCategories = prisma.categories.useFindMany({ where: { type: "Income" } })
@@ -99,6 +100,7 @@ function CategoryButton({
   title: string;
   isSelected: boolean;
 }) {
+  const prisma = usePrismaContext();
   return (
     <TouchableOpacity
       onPress={() => {
@@ -129,6 +131,7 @@ function CategoryButton({
 }
 
 function AddButton() {
+  const prisma = usePrismaContext();
   return (
     <TouchableOpacity
       onPress={() =>
