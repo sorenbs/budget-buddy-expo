@@ -906,7 +906,7 @@ PODS:
   - React-Mapbuffer (0.73.4):
     - glog
     - React-debug
-  - react-native-prisma (0.1.15):
+  - react-native-prisma (5.14.0-dev.48):
     - glog
     - RCT-Folly (= 2022.05.16.00)
     - React
@@ -1133,7 +1133,7 @@ DEPENDENCIES:
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector-modern`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - React-Mapbuffer (from `../node_modules/react-native/ReactCommon`)
-  - "react-native-prisma (from `../node_modules/@op-engineering/react-native-prisma`)"
+  - "react-native-prisma (from `../node_modules/@prisma/react-native`)"
   - react-native-quick-base64 (from `../node_modules/react-native-quick-base64`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - "react-native-segmented-control (from `../node_modules/@react-native-segmented-control/segmented-control`)"
@@ -1238,7 +1238,7 @@ EXTERNAL SOURCES:
   React-Mapbuffer:
     :path: "../node_modules/react-native/ReactCommon"
   react-native-prisma:
-    :path: "../node_modules/@op-engineering/react-native-prisma"
+    :path: "../node_modules/@prisma/react-native"
   react-native-quick-base64:
     :path: "../node_modules/react-native-quick-base64"
   react-native-safe-area-context:
@@ -1327,7 +1327,7 @@ SPEC CHECKSUMS:
   React-jsinspector: 9ac353eccf6ab54d1e0a33862ba91221d1e88460
   React-logger: 0a57b68dd2aec7ff738195f081f0520724b35dab
   React-Mapbuffer: 63913773ed7f96b814a2521e13e6d010282096ad
-  react-native-prisma: ed5f6abb9baf2adf82c3760f8e796f92bd79fa59
+  react-native-prisma: 67f102fbc0e8023b2757f77679995bdc7f20f2e2
   react-native-quick-base64: 777057ea4286f806b00259ede65dc79c7c706320
   react-native-safe-area-context: 0ee144a6170530ccc37a0fd9388e28d06f516a89
   react-native-segmented-control: 712749e75728a736a2b8a7d7dbc8c2a3344b73e8

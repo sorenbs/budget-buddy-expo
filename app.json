@@ -29,7 +29,7 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-		  "@op-engineering/react-native-prisma"
+		  "@prisma/react-native"
 	  ]
   }
 }

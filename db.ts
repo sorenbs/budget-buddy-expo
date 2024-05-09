@@ -1,6 +1,6 @@
-import '@op-engineering/react-native-prisma';
-import { PrismaClient } from '@prisma/client/rn';
-import { reactiveHooksExtension } from "@op-engineering/react-native-prisma";
+import '@prisma/client/react-native';
+import { PrismaClient } from '@prisma/client/react-native';
+import { reactiveHooksExtension } from "@prisma/react-native";
 
 const basePrisma = new PrismaClient()
 basePrisma.$applyPendingMigrations();

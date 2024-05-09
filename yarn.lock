@@ -1340,17 +1340,54 @@
     mkdirp "^1.0.4"
     rimraf "^3.0.2"
 
-"@op-engineering/react-native-prisma@0.1.18":
-  version "0.1.18"
-  resolved "https://registry.npmjs.org/@op-engineering/react-native-prisma/-/react-native-prisma-0.1.18.tgz"
-  integrity sha512-kywYr75XDaFuJAt7hr0LF0Pgh55XJ65VDoqprhI34CBeJsZutytgHguKm8LWCWxe2k33BtCn2dJKluZA1CDQhA==
+"@prisma/client@*", "@prisma/client@5.14.0-dev.48":
+  version "5.14.0-dev.48"
+  resolved "https://registry.npmjs.org/@prisma/client/-/client-5.14.0-dev.48.tgz"
+  integrity sha512-zjuC9eatNJqqnYNSO5F84DjwyYX1T9XCfahqKw+Eu4YOw77my0b60WyYn9iX3NErPgao6mwxTERrwLZBFP0uNQ==
+
+"@prisma/debug@5.14.0-dev.48":
+  version "5.14.0-dev.48"
+  resolved "https://registry.npmjs.org/@prisma/debug/-/debug-5.14.0-dev.48.tgz"
+  integrity sha512-GDfZlGX7fVbMv8WSPvSfff6Ujs/1yGv71DHLxxEqm+y4sOTn81VYgt5s4djwYwPgfb1BPALd2agkoJmgFPHYwg==
+
+"@prisma/engines-version@5.14.0-12.54465718776ea99c622bd1c060a5fa445952886d":
+  version "5.14.0-12.54465718776ea99c622bd1c060a5fa445952886d"
+  resolved "https://registry.npmjs.org/@prisma/engines-version/-/engines-version-5.14.0-12.54465718776ea99c622bd1c060a5fa445952886d.tgz"
+  integrity sha512-jAC0oYCLk+LD4clVb+c4uAaqn9IEU3X+W7nEYd7cUYJtNdZWrN5eVtzu6u+iafVrXte4mZWqwSlcKOJYY0G8ew==
+
+"@prisma/engines@5.14.0-dev.48":
+  version "5.14.0-dev.48"
+  resolved "https://registry.npmjs.org/@prisma/engines/-/engines-5.14.0-dev.48.tgz"
+  integrity sha512-v0mZJ/LFhbKdM5tG14nNxbZvkH8hRUeT0L/Bv/aA2SQ9y5RiVCUMHdRSsA5Kd0x4hjY1PkSHS1PRPziuJyqlug==
   dependencies:
-    pod-install "^0.2.0"
+    "@prisma/debug" "5.14.0-dev.48"
+    "@prisma/engines-version" "5.14.0-12.54465718776ea99c622bd1c060a5fa445952886d"
+    "@prisma/fetch-engine" "5.14.0-dev.48"
+    "@prisma/get-platform" "5.14.0-dev.48"
+
+"@prisma/fetch-engine@5.14.0-dev.48":
+  version "5.14.0-dev.48"
+  resolved "https://registry.npmjs.org/@prisma/fetch-engine/-/fetch-engine-5.14.0-dev.48.tgz"
+  integrity sha512-D9ltwjkvHgLhvaRQiAP7Ck31AuiHcvKShEg5Z562USum+ZCctXqxA6I+vxlLZLaduzFKMRC5EhLlsgv90PJgMQ==
+  dependencies:
+    "@prisma/debug" "5.14.0-dev.48"
+    "@prisma/engines-version" "5.14.0-12.54465718776ea99c622bd1c060a5fa445952886d"
+    "@prisma/get-platform" "5.14.0-dev.48"
+
+"@prisma/get-platform@5.14.0-dev.48":
+  version "5.14.0-dev.48"
+  resolved "https://registry.npmjs.org/@prisma/get-platform/-/get-platform-5.14.0-dev.48.tgz"
+  integrity sha512-9mGY0YXVp7m4CDafFb/iaT7wSdSnIXfVnyURCKLGgZbFFgNk5ug+EgrfQxNqaSjp/FIaxOPDxloONfHQf5KUbg==
+  dependencies:
+    "@prisma/debug" "5.14.0-dev.48"
+
+"@prisma/react-native@5.14.0-dev.48":
+  version "5.14.0-dev.48"
+  resolved "https://registry.npmjs.org/@prisma/react-native/-/react-native-5.14.0-dev.48.tgz"
+  integrity sha512-4TSsPMOjHAinrG900Ahp/KYqDD1HqI8qp66cj8D5YUSiA1orjT/Us7lEkr6+oV3rBmXyB4ji/98GoZFuCDqLYQ==
+  dependencies:
     react-native-quick-base64 "^2.0.8"
     react-native-url-polyfill "^2.0.0"
-
-"@prisma/client@*", "@prisma/client@5.9.0-integration-react-native.5":
-  version "5.9.0-integration-react-native.5"
 
 "@react-native-community/cli-clean@12.3.2":
   version "12.3.2"
@@ -3859,9 +3896,6 @@ plist@^3.0.5:
 pngjs@^3.3.0:
   version "3.4.0"
 
-pod-install@^0.2.0:
-  version "0.2.0"
-
 postcss@~8.4.32:
   version "8.4.35"
   dependencies:
@@ -3889,6 +3923,13 @@ pretty-format@^29.7.0:
     "@jest/schemas" "^29.6.3"
     ansi-styles "^5.0.0"
     react-is "^18.0.0"
+
+prisma@*, prisma@5.14.0-dev.48:
+  version "5.14.0-dev.48"
+  resolved "https://registry.npmjs.org/prisma/-/prisma-5.14.0-dev.48.tgz"
+  integrity sha512-tvnj8R39qYeDK3Fe2uvITTHHQ4SSJjYQ0TFQMRsmELM4SF1/6yx+OIf+zCAugFlUUoMAg9z/B8Zyhv6ayudAWw==
+  dependencies:
+    "@prisma/engines" "5.14.0-dev.48"
 
 process-nextick-args@~2.0.0:
   version "2.0.1"

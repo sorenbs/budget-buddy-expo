@@ -175,4 +175,4 @@ dependencies {
 apply from: new File(["node", "--print", "require.resolve('@react-native-community/cli-platform-android/package.json', { paths: [require.resolve('react-native/package.json')] })"].execute(null, rootDir).text.trim(), "../native_modules.gradle");
 applyNativeModulesAppBuildGradle(project)
 
-apply from: "../../node_modules/@op-engineering/react-native-prisma/react-native-prisma.gradle"
+apply from: "../../node_modules/react-native-prisma/react-native-prisma.gradle"
