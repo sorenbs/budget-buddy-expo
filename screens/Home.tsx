@@ -1,24 +1,35 @@
 import * as React from "react";
-import { ScrollView, StyleSheet, Text, TextStyle} from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  Platform,
+  Text,
+  TextStyle,
+} from "react-native";
+import { StatusBar } from "expo-status-bar";
 import TransactionList from "../components/TransactionsList";
 import Card from "../components/ui/Card";
 import AddTransaction from "../components/AddTransaction";
 
-import { prisma } from "../db"
+import { prisma } from "../db";
 
 export default function Home() {
-
   return (
-    <ScrollView contentContainerStyle={{ padding: 15, paddingVertical: 170 }}>
+    <ScrollView
+      contentContainerStyle={{
+        padding: 15,
+        paddingTop: Platform.select({ ios: 170, default: 15 }),
+      }}
+    >
       <AddTransaction />
       <TransactionSummary />
       <TransactionList />
+      <StatusBar style="auto" />
     </ScrollView>
   );
 }
 
 function TransactionSummary() {
-
   const now = new Date();
   const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
   const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 1);
@@ -27,15 +38,23 @@ function TransactionSummary() {
   const startOfMonthTimestamp = Math.floor(startOfMonth.getTime() / 1000);
   const endOfMonthTimestamp = Math.floor(endOfMonth.getTime() / 1000);
 
-  const totalExpenses = prisma.transactions.useAggregate({
-    _sum: { amount: true },
-    where: { type: "Expense", AND: { date: { lte: endOfMonthTimestamp, gte: startOfMonthTimestamp } } }
-  })?._sum.amount || 0
+  const totalExpenses =
+    prisma.transactions.useAggregate({
+      _sum: { amount: true },
+      where: {
+        type: "Expense",
+        AND: { date: { lte: endOfMonthTimestamp, gte: startOfMonthTimestamp } },
+      },
+    })?._sum.amount || 0;
 
-  const totalIncome = prisma.transactions.useAggregate({
-    _sum: { amount: true },
-    where: { type: "Income", AND: { date: { lte: endOfMonthTimestamp, gte: startOfMonthTimestamp } } }
-  })?._sum.amount || 0
+  const totalIncome =
+    prisma.transactions.useAggregate({
+      _sum: { amount: true },
+      where: {
+        type: "Income",
+        AND: { date: { lte: endOfMonthTimestamp, gte: startOfMonthTimestamp } },
+      },
+    })?._sum.amount || 0;
 
   const savings = totalIncome - totalExpenses;
   const readablePeriod = new Date().toLocaleDateString("default", {

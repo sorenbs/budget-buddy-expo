@@ -2,6 +2,7 @@
 
 # dependencies
 node_modules/
+.vscode
 
 # Expo
 .expo/
@@ -36,3 +37,7 @@ yarn-error.*
 
 # yearn
 .yarn/*
+
+# Use CNG to generate Android and iOS projects on demand
+android/
+ios/
