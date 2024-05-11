@@ -9,8 +9,8 @@
     "web": "expo start --web"
   },
   "dependencies": {
-    "@prisma/client": "5.14.0-dev.48",
-    "@prisma/react-native": "5.14.0-dev.48",
+    "@prisma/client": "5.14.0-dev.67",
+    "@prisma/react-native": "5.14.0-dev.67",
     "@react-native-segmented-control/segmented-control": "^2.5.0",
     "@react-navigation/native": "^6.1.10",
     "@react-navigation/native-stack": "^6.9.18",
@@ -20,6 +20,7 @@
     "expo-sqlite": "~14.0.3",
     "expo-status-bar": "~1.12.1",
     "expo-system-ui": "~3.0.4",
+    "prop-types": "^15.8.1",
     "react": "18.2.0",
     "react-native": "0.74.1",
     "react-native-auto-size-text": "^1.1.1",
@@ -30,7 +31,7 @@
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "@types/react": "~18.2.45",
-    "prisma": "5.14.0-dev.48",
+    "prisma": "5.14.0-dev.67",
     "typescript": "~5.3.3"
   },
   "private": true
