@@ -20,7 +20,6 @@
     "expo-sqlite": "~14.0.3",
     "expo-status-bar": "~1.12.1",
     "expo-system-ui": "~3.0.4",
-    "prop-types": "^15.8.1",
     "react": "18.2.0",
     "react-native": "0.74.1",
     "react-native-auto-size-text": "^1.1.1",
