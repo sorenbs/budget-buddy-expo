@@ -4,35 +4,20 @@
 
 ## Introduction
 
-Welcome to the Budget Buddy App, a real-world budget management application built with SQLite and Expo 50. This project demonstrates the power of developing local-first applications that manage complex data structures with instant performance for CRUD operations.
+This repository contains a version of the Budget Buddy app converted to use Prisma for React Native with reactive queries. This provides fully tyle-safe database access, and removes any manual view-update logic, as views are automatically re-rendered when the database is modified.
 
-### About the App
+- Original Budget Buddy App: https://codewithbeto.dev/projects/budget-buddy-app
 
-This app is designed to help users manage their finances effectively using the robustness of SQLite for data management. With its user-friendly interface and powerful backend, Budget Buddy makes budgeting simple and efficient.
 
-Watch the app in action on my YouTube channel: [Budget Buddy App Demo](https://youtu.be/dl74XgJYK1A)
+## Prisma for React Native
 
-## Features
+Prisma is a widely used ORM for JS/TS backend applications. It is fast, easy to use and provides auto-completion plus complete type-safety of both queries and returned data. At Expos [App.js Conference](https://appjs.co/) we announced that Prisma now supports Expo and React Native. Follow the [getting-started instructions here](https://github.com/prisma/react-native-prisma) to set up Prisma in your own project.
 
-- User-friendly budget tracking
-- Instant performance for CRUD operations
-- Local-first data management with SQLite
-- Built with TypeScript and Expo 50
+## Running the app
 
-## Technologies Used
-
-- **Language:** TypeScript
-- **Framework:** Expo 50
-- **Database:** SQLite
-- **Project Type:** Mobile
-
-## Getting Started
-
-To get started with this project, clone the repository and install the required dependencies.
-
-```bash
-git clone https://github.com/betomoedano/Budget-Buddy-App.git
-cd Budget-Buddy-App
 ```
-
-💡 Find more resources at [codewithbeto.dev](https://codewithbeto.dev)
+npm install
+npx prisma generate
+npx expo prebuild --clean
+npx expo run:ios
+```
